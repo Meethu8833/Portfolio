@@ -1,0 +1,6 @@
+# robots.txt — allow all crawlers full access (it's a public portfolio).
+User-agent: *
+Allow: /
+
+# Point crawlers at the sitemap for efficient indexing.
+Sitemap: https://meethuprasanth.vercel.app/sitemap.xml

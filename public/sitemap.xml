@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap. Single-page site, so the one URL is the home page; the section
+  anchors (#about, #projects, …) are not separate crawlable URLs and are
+  intentionally omitted (search engines index the single document).
+  Update the <lastmod> date when you make significant content changes, and
+  swap the domain if you move off the placeholder.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://meethuprasanth.vercel.app/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

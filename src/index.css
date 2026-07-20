@@ -1,0 +1,86 @@
+/* ---------------------------------------------------------------------------
+   Fonts — self-hosted via @fontsource (no external CDN, no layout shift).
+   Import only the weights we actually use to keep the bundle lean.
+--------------------------------------------------------------------------- */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/600.css';
+@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+/* Tailwind layers — base resets, component classes, utilities. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Theme tokens as CSS variables. Tailwind reads its palette from the config;
+   these variables cover the few spots (selection, focus offset) where raw CSS
+   is cleaner than utility classes. Values mirror the plan's palette.
+--------------------------------------------------------------------------- */
+:root {
+  --bg: #f8fafc;          /* slate-50  */
+  --surface: #ffffff;
+  --text: #0f172a;        /* slate-900 */
+  --text-muted: #475569;  /* slate-600 */
+  --border: #e2e8f0;      /* slate-200 */
+  --accent: #6366f1;
+}
+
+.dark {
+  --bg: #0f172a;          /* slate-900 */
+  --surface: #1e293b;     /* slate-800 */
+  --text: #f1f5f9;        /* slate-100 */
+  --text-muted: #94a3b8;  /* slate-400 */
+  --border: #334155;      /* slate-700 */
+  --accent: #818cf8;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;      /* smooth anchor navigation */
+    scroll-padding-top: 5rem;     /* offset so the sticky navbar doesn't cover headings */
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans antialiased;
+    @apply dark:bg-slate-900 dark:text-slate-100;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Consistent, accent-colored focus ring for keyboard accessibility. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900;
+  }
+
+  /* Text selection uses the accent color. */
+  ::selection {
+    background-color: var(--accent);
+    color: #ffffff;
+  }
+
+  /* Skip-to-content link: off-screen until it receives keyboard focus, then it
+     slides into the top-left so a keyboard user can activate it. */
+  .skip-link {
+    @apply absolute left-4 top-[-100px] z-[200] rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-all;
+  }
+  .skip-link:focus {
+    @apply top-4;
+  }
+}
+
+/* Respect users who prefer reduced motion — disable non-essential animation. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

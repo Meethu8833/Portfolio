@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicons + PWA manifest -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#6366f1" />
+
+    <!-- Canonical URL (prevents duplicate-content ambiguity). Swap the domain
+         here when you deploy — it's the one place the base URL lives in HTML. -->
+    <link rel="canonical" href="https://meethuprasanth.vercel.app/" />
+
+    <!-- Primary SEO meta -->
+    <title>Meethu Prasanth K K — Software Engineer</title>
+    <meta
+      name="description"
+      content="Software engineer building secure, scalable backends and full-stack apps with Python, FastAPI, and Django. REST APIs, data models, and well-tested web applications."
+    />
+    <meta name="author" content="Meethu Prasanth K K" />
+    <meta
+      name="keywords"
+      content="Meethu Prasanth, Software Engineer, Backend Developer, Python, FastAPI, Django, REST API, SQLAlchemy, Celery, Full Stack Developer, Kozhikode"
+    />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph (Facebook, LinkedIn, WhatsApp, etc.) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://meethuprasanth.vercel.app/" />
+    <meta property="og:site_name" content="Meethu Prasanth K K" />
+    <meta property="og:title" content="Meethu Prasanth K K — Software Engineer" />
+    <meta
+      property="og:description"
+      content="Backend & full-stack engineer — Python, FastAPI, Django. REST APIs, SQLAlchemy, Celery, Docker."
+    />
+    <meta property="og:image" content="https://meethuprasanth.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Meethu Prasanth K K — Software Engineer" />
+
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Meethu Prasanth K K — Software Engineer" />
+    <meta
+      name="twitter:description"
+      content="Backend & full-stack engineer — Python, FastAPI, Django."
+    />
+    <meta name="twitter:image" content="https://meethuprasanth.vercel.app/og-image.png" />
+
+    <!--
+      Structured data (JSON-LD) — a Person schema. Helps search engines build a
+      rich knowledge panel and understand who this site is about. Values mirror
+      the resume; update `url` to your live domain and add profile links.
+    -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Meethu Prasanth K K",
+        "jobTitle": "Software Engineer",
+        "description": "Backend and full-stack software engineer specialising in Python, FastAPI, and Django.",
+        "url": "https://meethuprasanth.vercel.app/",
+        "image": "https://meethuprasanth.vercel.app/og-image.png",
+        "email": "mailto:meethuprasanthkk@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kozhikode",
+          "addressRegion": "Kerala",
+          "addressCountry": "IN"
+        },
+        "sameAs": [
+          "https://github.com/Meethu8833",
+          "https://linkedin.com/in/meethu-prasanth51b9142bb"
+        ],
+        "knowsAbout": [
+          "Python",
+          "FastAPI",
+          "Django",
+          "REST APIs",
+          "SQLAlchemy",
+          "Celery",
+          "MySQL",
+          "Docker",
+          "React"
+        ],
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "University of Calicut"
+        },
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Infinite Open Source Solutions LLP"
+        }
+      }
+    </script>
+
+    <!--
+      No-flash dark mode.
+      Runs before React paints so the correct theme is applied immediately,
+      preventing a light→dark flicker on load. Reads a saved preference first,
+      then falls back to the OS setting. ThemeContext keeps localStorage in sync.
+    -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (saved === 'dark' || (!saved && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
