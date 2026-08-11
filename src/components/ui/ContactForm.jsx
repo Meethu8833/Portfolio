@@ -133,10 +133,10 @@ export default function ContactForm() {
           value={form.message}
           onChange={handleChange}
           placeholder="Tell me about your project or opportunity..."
-          className={`w-full resize-none rounded-lg border bg-white/50 px-4 py-2.5 text-sm outline-none transition-colors placeholder:text-slate-400 focus:border-accent dark:bg-slate-900/40 ${
+          className={`w-full resize-none rounded-xl border bg-white/60 px-4 py-2.5 text-sm outline-none transition-all placeholder:text-slate-400 focus:border-accent focus:ring-2 focus:ring-accent/20 dark:bg-ink-900/40 dark:focus:border-accent-light dark:focus:ring-accent-light/20 ${
             errors.message
               ? 'border-red-400 dark:border-red-500'
-              : 'border-slate-300 dark:border-slate-600'
+              : 'border-slate-300 dark:border-ink-600'
           }`}
         />
         {errors.message && <FieldError>{errors.message}</FieldError>}
@@ -148,7 +148,7 @@ export default function ContactForm() {
         disabled={isLoading}
         whileHover={{ scale: isLoading ? 1 : 1.02 }}  // button animation
         whileTap={{ scale: isLoading ? 1 : 0.98 }}
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-accent-gradient px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-accent/25 transition-opacity disabled:opacity-70"
+        className="flex w-full items-center justify-center gap-2 rounded-full bg-accent-gradient px-6 py-3 text-sm font-semibold text-white shadow-glow transition-all hover:shadow-glow-lg disabled:opacity-70"
       >
         {isLoading ? (
           <>
@@ -208,8 +208,8 @@ function Field({ label, name, type = 'text', value, onChange, error, placeholder
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className={`w-full rounded-lg border bg-white/50 px-4 py-2.5 text-sm outline-none transition-colors placeholder:text-slate-400 focus:border-accent dark:bg-slate-900/40 ${
-          error ? 'border-red-400 dark:border-red-500' : 'border-slate-300 dark:border-slate-600'
+        className={`w-full rounded-xl border bg-white/60 px-4 py-2.5 text-sm outline-none transition-all placeholder:text-slate-400 focus:border-accent focus:ring-2 focus:ring-accent/20 dark:bg-ink-900/40 dark:focus:border-accent-light dark:focus:ring-accent-light/20 ${
+          error ? 'border-red-400 dark:border-red-500' : 'border-slate-300 dark:border-ink-600'
         }`}
       />
       {error && <FieldError>{error}</FieldError>}
@@ -236,7 +236,7 @@ function Notification({ type, children }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3 }}
-      className={`flex items-center gap-2 rounded-lg p-3 text-sm ${styles}`}
+      className={`flex items-center gap-2 rounded-xl p-3 text-sm ${styles}`}
     >
       {children}
     </motion.div>

@@ -32,7 +32,7 @@ export default function Footer() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <footer className="relative border-t border-slate-200 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/50">
+    <footer className="relative border-t border-slate-200 bg-white/40 backdrop-blur-sm dark:border-ink-700 dark:bg-ink-950/50">
       {/* ---- Animated gradient divider ----
           A thin bar at the very top of the footer whose gradient position
           shifts left↔right forever, giving a subtle "flowing" accent line.
@@ -41,7 +41,7 @@ export default function Footer() {
         className="h-0.5 w-full"
         style={{
           backgroundImage:
-            'linear-gradient(90deg, transparent, #6366f1, #8b5cf6, transparent)',
+            'linear-gradient(90deg, transparent, #0d9488, #06b6d4, transparent)',
           backgroundSize: '200% 100%',
         }}
         animate={{ backgroundPosition: ['0% 0%', '200% 0%'] }}
@@ -82,7 +82,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   aria-label={label}
                   whileHover={{ y: -3 }}   // lift on hover
-                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-colors hover:border-accent hover:text-accent dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:border-accent-light dark:hover:text-accent-light"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white/70 text-slate-600 transition-all hover:border-accent hover:text-accent hover:shadow-glow dark:border-ink-700 dark:bg-ink-800/70 dark:text-slate-400 dark:hover:border-accent-light dark:hover:text-accent-light"
                 >
                   <Icon size={18} />
                 </motion.a>
@@ -92,7 +92,7 @@ export default function Footer() {
 
           {/* ---- Quick navigation links ---- */}
           <div>
-            <h3 className="mb-4 font-heading text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-200">
+            <h3 className="mb-4 font-heading text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-100">
               Quick Links
             </h3>
             <ul className="space-y-2">
@@ -116,7 +116,7 @@ export default function Footer() {
 
           {/* ---- Get in touch shortcut ---- */}
           <div>
-            <h3 className="mb-4 font-heading text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-200">
+            <h3 className="mb-4 font-heading text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-100">
               Get In Touch
             </h3>
             <a
@@ -132,7 +132,7 @@ export default function Footer() {
         </div>
 
         {/* ---- Bottom bar: copyright ---- */}
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-slate-200 pt-6 text-sm text-slate-500 dark:border-slate-800 sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-slate-200 pt-6 text-sm text-slate-500 dark:border-ink-700 sm:flex-row">
           <p>
             © {year} {profile.name}. All rights reserved.
           </p>
@@ -154,7 +154,7 @@ export default function Footer() {
             exit={{ opacity: 0, scale: 0.5 }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className="fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-accent-gradient text-white shadow-lg shadow-accent/30"
+            className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-accent-gradient text-white shadow-glow-lg"
           >
             <motion.span
               animate={{ y: [0, -3, 0] }}

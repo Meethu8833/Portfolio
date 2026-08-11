@@ -19,57 +19,183 @@
 
 /* ---------------------------------------------------------------------------
    Theme tokens as CSS variables. Tailwind reads its palette from the config;
-   these variables cover the few spots (selection, focus offset) where raw CSS
-   is cleaner than utility classes. Values mirror the plan's palette.
+   these variables cover the spots (selection, focus, textures, scrollbar)
+   where raw CSS is cleaner than utility classes.
+
+   Palette: teal → cyan accent over a deep-navy ("ink") ground.
 --------------------------------------------------------------------------- */
 :root {
-  --bg: #f8fafc;          /* slate-50  */
+  --bg: #f6f9fb;          /* cool off-white */
   --surface: #ffffff;
-  --text: #0f172a;        /* slate-900 */
-  --text-muted: #475569;  /* slate-600 */
-  --border: #e2e8f0;      /* slate-200 */
-  --accent: #6366f1;
+  --text: #0b1220;        /* ink-900 */
+  --text-muted: #4a5b70;
+  --border: #dbe6ec;
+  --accent: #0d9488;      /* teal-600 — AA contrast on white */
+  --accent-2: #06b6d4;    /* cyan-500 */
+  --glow: rgba(13, 148, 136, 0.16);
 }
 
 .dark {
-  --bg: #0f172a;          /* slate-900 */
-  --surface: #1e293b;     /* slate-800 */
-  --text: #f1f5f9;        /* slate-100 */
-  --text-muted: #94a3b8;  /* slate-400 */
-  --border: #334155;      /* slate-700 */
-  --accent: #818cf8;
+  --bg: #0b1220;          /* ink-900 */
+  --surface: #111c2e;     /* ink-800 */
+  --text: #e8f0f5;
+  --text-muted: #92a5ba;
+  --border: #1a2942;      /* ink-700 */
+  --accent: #2dd4bf;      /* teal-400 — brighter so it lifts off the navy */
+  --accent-2: #22d3ee;    /* cyan-400 */
+  --glow: rgba(45, 212, 191, 0.18);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;      /* smooth anchor navigation */
     scroll-padding-top: 5rem;     /* offset so the sticky navbar doesn't cover headings */
+    /* Decorative blurred auras intentionally bleed past the layout edges; clip
+       them here so they can never produce a horizontal scrollbar on mobile. */
+    overflow-x: hidden;
   }
 
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased;
-    @apply dark:bg-slate-900 dark:text-slate-100;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-[#f6f9fb] text-ink-900 font-sans antialiased;
+    @apply dark:bg-ink-900 dark:text-slate-100;
     transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Headings get the display face with tightened tracking by default. */
+  h1, h2, h3, h4 {
+    @apply font-heading tracking-tight;
   }
 
   /* Consistent, accent-colored focus ring for keyboard accessibility. */
   :focus-visible {
-    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900;
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-[#f6f9fb] dark:ring-accent-light dark:ring-offset-ink-900;
   }
 
   /* Text selection uses the accent color. */
   ::selection {
     background-color: var(--accent);
-    color: #ffffff;
+    color: #04121a;
   }
 
-  /* Skip-to-content link: off-screen until it receives keyboard focus, then it
-     slides into the top-left so a keyboard user can activate it. */
+  /* Slim, theme-aware scrollbar so the chrome matches the palette. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent);
+    background-clip: content-box;
+  }
+
+  /* Skip-to-content link: off-screen until it receives keyboard focus. */
+  /* Uses accent-deep (teal-700+) rather than the lighter accent so white text
+     on it clears WCAG AA (4.5:1) for normal-size text. */
   .skip-link {
-    @apply absolute left-4 top-[-100px] z-[200] rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-all;
+    @apply absolute left-4 top-[-100px] z-[200] rounded-lg bg-[#115e59] px-4 py-2 text-sm font-medium text-white transition-all;
   }
   .skip-link:focus {
     @apply top-4;
+  }
+}
+
+@layer components {
+  /* -------------------------------------------------------------------------
+     Reusable surface treatments. Centralising these keeps every card in the
+     site visually identical and makes a global restyle a one-file change.
+  ------------------------------------------------------------------------- */
+
+  /* Glass card — translucent surface + blur + hairline border. The workhorse. */
+  .card-glass {
+    @apply rounded-2xl border border-slate-200/80 bg-white/70 backdrop-blur-xl;
+    @apply dark:border-ink-700 dark:bg-ink-800/60;
+  }
+
+  /* Gradient-hairline wrapper: a 1px accent frame via the p-px trick. Put a
+     `.card-glass` (or any rounded child) inside it. */
+  .card-frame {
+    @apply rounded-2xl bg-gradient-to-br from-accent/40 via-slate-200/50 to-accent-cyan/40 p-px;
+    @apply dark:from-accent-light/35 dark:via-ink-700 dark:to-accent-cyan/35;
+  }
+
+  /* Accent text — gradient fill for numbers and display words. */
+  .text-gradient {
+    @apply bg-gradient-to-br from-accent to-accent-cyan bg-clip-text text-transparent;
+    @apply dark:from-accent-light dark:to-accent-cyan;
+  }
+
+  /* Primary pill button. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent-gradient px-6 py-3
+           text-sm font-semibold text-white shadow-glow transition-all
+           hover:shadow-glow-lg hover:brightness-110 active:scale-95;
+  }
+
+  /* Secondary / outline pill button. */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 px-6 py-3
+           text-sm font-semibold text-slate-700 transition-all
+           hover:border-accent hover:bg-accent/5 hover:text-accent active:scale-95
+           dark:border-ink-600 dark:text-slate-200 dark:hover:border-accent-light
+           dark:hover:bg-accent-light/10 dark:hover:text-accent-light;
+  }
+
+  /* Small mono chip used for tech tags. */
+  .chip {
+    @apply rounded-full border border-accent/20 bg-accent/10 px-2.5 py-0.5 font-mono text-xs
+           text-accent-deep dark:border-accent-light/25 dark:bg-accent-light/10 dark:text-accent-light;
+  }
+
+  /* Eyebrow label above section titles. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/5 px-3 py-1
+           font-mono text-xs tracking-wider text-accent-deep
+           dark:border-accent-light/20 dark:bg-accent-light/5 dark:text-accent-light;
+  }
+}
+
+@layer utilities {
+  /* Faint blueprint grid, used as a page-wide texture behind content. The mask
+     fades it out toward the edges so it never competes with text. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  /* Fine film grain — breaks up the large flat gradients so they don't band. */
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+
+  /* Edge-fade for horizontally scrolling strips (the skills marquee). */
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  /* Pause any CSS animation on hover — used by the marquee. */
+  .pause-on-hover:hover * {
+    animation-play-state: paused;
   }
 }
 

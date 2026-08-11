@@ -37,15 +37,22 @@ export default function StatCard({ stat }) {
       ref={ref}
       variants={popIn}       // pop-in entrance (parent staggers these)
       whileHover={{ y: -4 }} // subtle lift on hover
-      className="group relative flex flex-col items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm transition-shadow hover:shadow-lg dark:border-slate-700 dark:bg-slate-800"
+      transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+      className="card-glass group relative flex flex-col items-center justify-center gap-1.5 overflow-hidden p-5 text-center transition-shadow hover:shadow-card-hover"
     >
+      {/* Soft accent wash from the bottom, revealed on hover. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-accent/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:from-accent-light/10"
+      />
+
       {/* Icon in an accent-tinted rounded square. */}
-      <div className="mb-1 flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent dark:text-accent-light">
-        {Icon && <Icon size={20} />}
+      <div className="relative mb-0.5 flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10 text-accent transition-transform group-hover:scale-110 dark:bg-accent-light/10 dark:text-accent-light">
+        {Icon && <Icon size={18} />}
       </div>
 
       {/* The big number (counted) or text (Current Position). */}
-      <div className="bg-accent-gradient bg-clip-text font-heading text-4xl font-bold text-transparent">
+      <div className="text-gradient relative font-heading text-3xl font-bold">
         {display ?? (
           <>
             {count}
@@ -55,13 +62,15 @@ export default function StatCard({ stat }) {
       </div>
 
       {/* Label under the number. */}
-      <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+      <p className="relative text-xs font-medium leading-tight text-slate-600 dark:text-slate-400">
         {label}
       </p>
 
       {/* Optional smaller line (used by the position card). */}
       {sublabel && (
-        <p className="text-xs text-slate-400 dark:text-slate-500">{sublabel}</p>
+        <p className="relative text-[10px] leading-tight text-slate-400 dark:text-slate-500">
+          {sublabel}
+        </p>
       )}
     </motion.div>
   );

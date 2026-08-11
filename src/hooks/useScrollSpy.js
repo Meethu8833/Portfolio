@@ -11,18 +11,21 @@ import { useEffect, useState } from 'react';
  *
  * Uses IntersectionObserver (browser-native, runs off the main thread) instead
  * of a scroll listener — cheaper and smoother.
+ *
+ * IMPORTANT — lazy sections:
+ * Every section below the hero is `React.lazy`, so on first run only `#home`
+ * exists in the DOM; the rest mount later as their chunks resolve. Observing
+ * once on mount would therefore watch a single element and leave the navbar
+ * stuck on "Home" forever. We re-scan whenever new sections appear, driven by a
+ * MutationObserver on <main>, and observe only ids we haven't already attached.
  */
 export function useScrollSpy(ids, offset = 80) {
   // Start with the first id so a link is highlighted even before any scroll.
   const [activeId, setActiveId] = useState(ids[0]);
 
   useEffect(() => {
-    // Grab the actual DOM nodes for each id (skip any that aren't mounted yet).
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
-
-    if (elements.length === 0) return;
+    // Tracks which ids are already being observed, so re-scans are idempotent.
+    const observed = new Set();
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -46,10 +49,36 @@ export function useScrollSpy(ids, offset = 80) {
       },
     );
 
-    elements.forEach((el) => observer.observe(el));
+    // Attach the observer to any watched section that has appeared since the
+    // last scan. Safe to call repeatedly.
+    const attachNewSections = () => {
+      for (const id of ids) {
+        if (observed.has(id)) continue;
+        const el = document.getElementById(id);
+        if (el) {
+          observer.observe(el);
+          observed.add(id);
+        }
+      }
+    };
+
+    attachNewSections(); // catch whatever is already mounted (at minimum #home)
+
+    // Watch for the lazy sections arriving, then attach them too. Scoped to
+    // <main> (falling back to <body>) to keep the callback cheap.
+    const root = document.getElementById('main-content') ?? document.body;
+    const mutationObserver = new MutationObserver(() => {
+      attachNewSections();
+      // Once every section is attached there's nothing left to watch.
+      if (observed.size === ids.length) mutationObserver.disconnect();
+    });
+    mutationObserver.observe(root, { childList: true, subtree: true });
 
     // Clean up when ids/offset change or the component unmounts.
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, [ids, offset]);
 
   return activeId;

@@ -4,17 +4,28 @@ import { fadeUp, scrollReveal, staggerContainer } from '../../lib/motion';
 /**
  * Section — a reusable wrapper every content section uses.
  * Provides: the scroll anchor id, consistent vertical padding + max width, an
- * optional animated heading (eyebrow + title), and a scroll-triggered stagger
- * so children reveal in sequence. Keeps all sections visually consistent and
- * removes boilerplate from each one.
+ * optional animated heading (eyebrow pill + title + rule), and a scroll-
+ * triggered stagger so children reveal in sequence.
  *
  * @param {string} id        Anchor id (matches the navbar link + scroll-spy).
  * @param {string} eyebrow   Small mono label above the title (optional).
  * @param {string} title     The section heading (optional).
+ * @param {string} subtitle  Supporting line under the title (optional).
+ * @param {'center'|'left'} align  Heading alignment. Defaults to centered.
  * @param {ReactNode} children  Section content.
  * @param {string} className Extra classes for the outer <section>.
  */
-export default function Section({ id, eyebrow, title, children, className = '' }) {
+export default function Section({
+  id,
+  eyebrow,
+  title,
+  subtitle,
+  align = 'center',
+  children,
+  className = '',
+}) {
+  const centered = align === 'center';
+
   return (
     <section
       id={id}
@@ -24,28 +35,40 @@ export default function Section({ id, eyebrow, title, children, className = '' }
       {title && (
         <motion.div
           {...scrollReveal}          // initial=hidden, animate when in view, once
-          variants={staggerContainer} // stagger the eyebrow then the title
-          className="mb-12 text-center"
+          variants={staggerContainer} // stagger the eyebrow, then the title
+          className={`mb-14 ${centered ? 'text-center' : 'text-left'}`}
         >
           {eyebrow && (
-            <motion.p
-              variants={fadeUp}
-              className="mb-2 font-mono text-sm text-accent dark:text-accent-light"
-            >
+            <motion.p variants={fadeUp} className="eyebrow mb-4">
               {eyebrow}
             </motion.p>
           )}
+
           <motion.h2
             variants={fadeUp}
-            className="font-heading text-3xl font-bold sm:text-4xl"
+            className="font-heading text-3xl font-bold tracking-tight sm:text-4xl lg:text-[2.75rem]"
           >
             {title}
           </motion.h2>
-          {/* Small gradient underline accent beneath the title. */}
+
+          {/* Gradient rule under the title — centered or left-aligned to match. */}
           <motion.div
             variants={fadeUp}
-            className="mx-auto mt-4 h-1 w-16 rounded-full bg-accent-gradient"
+            className={`mt-4 h-1 w-20 rounded-full bg-accent-gradient ${
+              centered ? 'mx-auto' : ''
+            }`}
           />
+
+          {subtitle && (
+            <motion.p
+              variants={fadeUp}
+              className={`mt-5 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400 ${
+                centered ? 'mx-auto' : ''
+              }`}
+            >
+              {subtitle}
+            </motion.p>
+          )}
         </motion.div>
       )}
 

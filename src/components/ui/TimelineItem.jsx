@@ -25,20 +25,20 @@ export default function TimelineItem({ exp, isLast }) {
           {current && (
             // Expanding, fading ring — a soft "live" pulse (infinite loop).
             <motion.span
-              className="absolute inset-0 rounded-full bg-accent"
+              className="absolute inset-0 rounded-full bg-accent dark:bg-accent-light"
               animate={{ scale: [1, 1.8], opacity: [0.5, 0] }}
               transition={{ duration: 1.8, repeat: Infinity, ease: 'easeOut' }}
             />
           )}
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-accent-gradient text-white shadow-lg shadow-accent/30">
-            <FiBriefcase size={16} />
+          <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-accent-gradient text-white shadow-glow">
+            <FiBriefcase size={17} />
           </div>
         </div>
 
         {/* Connector line down to the next item (omitted on the last one).
             `flex-1` stretches it to fill the card's height. */}
         {!isLast && (
-          <div className="w-px flex-1 bg-gradient-to-b from-accent/40 to-slate-200 dark:to-slate-700" />
+          <div className="w-px flex-1 bg-gradient-to-b from-accent/50 via-accent/20 to-transparent" />
         )}
       </div>
 
@@ -48,19 +48,20 @@ export default function TimelineItem({ exp, isLast }) {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}         // animate once, when 30% visible
-        className="mb-10 flex-1 rounded-2xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur-sm transition-shadow hover:shadow-lg dark:border-slate-700 dark:bg-slate-800/70"
+        className="card-glass group mb-10 flex-1 p-6 transition-shadow hover:shadow-card-hover"
       >
         {/* Header: role + "Current" badge, then company. */}
-        <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+        <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
           <h3 className="font-heading text-lg font-bold">{role}</h3>
           {current && (
-            <span className="rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-medium text-accent dark:text-accent-light">
+            <span className="flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-medium text-emerald-600 dark:text-emerald-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
               Current
             </span>
           )}
         </div>
 
-        <p className="mb-3 font-medium text-accent dark:text-accent-light">
+        <p className="mb-3 font-medium text-accent-deep dark:text-accent-light">
           {company}
         </p>
 
@@ -90,7 +91,7 @@ export default function TimelineItem({ exp, isLast }) {
               className="flex gap-2.5 text-sm leading-relaxed text-slate-600 dark:text-slate-300"
             >
               {/* Custom bullet: a small accent dot, aligned to the first line. */}
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-gradient" />
+              <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent-gradient" />
               {item}
             </motion.li>
           ))}
@@ -101,7 +102,7 @@ export default function TimelineItem({ exp, isLast }) {
           {tech.map((t) => (
             <span
               key={t}
-              className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-900/50 dark:text-slate-400"
+              className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-xs text-slate-600 dark:border-ink-700 dark:bg-ink-900/50 dark:text-slate-400"
             >
               {t}
             </span>

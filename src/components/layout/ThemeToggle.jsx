@@ -18,10 +18,11 @@ export default function ThemeToggle() {
       // Describe the *action* for screen readers, and label it for tooltips.
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Light mode' : 'Dark mode'}
-      className="relative flex h-9 w-9 items-center justify-center rounded-lg
-                 border border-slate-200 bg-white text-slate-700
-                 transition-colors hover:text-accent
-                 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:text-accent-light"
+      className="relative flex h-9 w-9 items-center justify-center rounded-xl
+                 border border-slate-200 bg-white/70 text-slate-700
+                 transition-colors hover:border-accent hover:text-accent
+                 dark:border-ink-700 dark:bg-ink-800/70 dark:text-slate-300
+                 dark:hover:border-accent-light dark:hover:text-accent-light"
     >
       {/*
         AnimatePresence lets the outgoing icon animate OUT while the incoming one
