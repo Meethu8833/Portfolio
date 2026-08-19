@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 /**
  * FloatingBlobs — the site-wide ambient background: a fixed layer of soft
- * drifting teal/cyan auras, a faint blueprint grid, and a film-grain overlay.
+ * drifting amber/orange auras, a faint blueprint grid, and a film-grain overlay.
  * Sits behind all content and gives the deep-navy ground depth instead of a
  * flat fill.
  *
@@ -23,7 +23,7 @@ const BLOBS = [
     duration: 22,
   },
   {
-    className: 'right-[-10%] top-[30%] h-[440px] w-[440px] bg-accent-cyan/25 dark:bg-accent-cyan/[0.14]',
+    className: 'right-[-10%] top-[30%] h-[440px] w-[440px] bg-accent-warm/25 dark:bg-accent-warm/[0.14]',
     x: [0, -60, 0],
     y: [0, 70, 0],
     duration: 26,

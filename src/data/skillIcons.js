@@ -26,7 +26,7 @@ export const skillIcons = {
   sql:        { Icon: SiMysql,      color: '#4479A1', darkColor: '#6BA7CE' }, // generic SQL → MySQL mark
   fastapi:    { Icon: SiFastapi,    color: '#009688' },
   django:     { Icon: SiDjango,     color: '#092E20', darkColor: '#44B78B' }, // near-black → Django green
-  api:        { Icon: FiServer,     color: '#0d9488' }, // "REST APIs" → generic server (accent)
+  api:        { Icon: FiServer,     color: '#C79A5C' }, // "REST APIs" → generic server (accent)
   sqlalchemy: { Icon: SiSqlalchemy, color: '#D71F00' },
   celery:     { Icon: SiCelery,     color: '#37814A' },
   react:      { Icon: SiReact,      color: '#61DAFB' },
@@ -51,6 +51,6 @@ export const skillIcons = {
  */
 export function resolveSkillColor(key, isDark) {
   const entry = skillIcons[key];
-  if (!entry) return '#0d9488';
+  if (!entry) return '#C79A5C';
   return isDark && entry.darkColor ? entry.darkColor : entry.color;
 }

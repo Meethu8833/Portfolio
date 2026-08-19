@@ -1,36 +1,30 @@
 import { motion } from 'framer-motion';
-import { FiClock, FiLayers, FiFolder, FiBriefcase } from 'react-icons/fi';
 import { aboutIntro, aboutStats } from '../../data/about';
 import { profile } from '../../data/profile';
-import { fadeUp, popIn, scrollReveal, staggerContainer } from '../../lib/motion';
+import { fadeUp, scrollReveal, staggerContainer } from '../../lib/motion';
 import Section from '../ui/Section';
 import StatCard from '../ui/StatCard';
 
-// Icons for the highlight tiles, keyed by their position in aboutIntro so the
-// data file stays plain prose (no component references in data).
-const INTRO_ICONS = [FiBriefcase, FiLayers, FiFolder, FiClock];
-
 /**
- * About — a bento grid rather than a two-column split.
+ * About — a lead card alongside a cluster of stat cards.
  *
  * Layout (lg and up, 6 columns):
  *   ┌───────────────────────┬───────────────┐
  *   │ Professional profile  │  stat  stat   │  ← lead card spans 4, stats 2
  *   │        (lead)         │  stat  stat   │
- *   ├───────┬───────┬───────┴───────────────┤
- *   │ tile  │ tile  │ tile                  │  ← three supporting tiles
- *   └───────┴───────┴───────────────────────┘
+ *   └───────────────────────┴───────────────┘
  */
 export default function About() {
-  // The first intro block is the "lead" card; the rest become smaller tiles.
-  const [lead, ...supporting] = aboutIntro;
+  // Only the first intro block is rendered here (as the lead card). The rest of
+  // aboutIntro is kept in the data file but intentionally not rendered.
+  const [lead] = aboutIntro;
 
   return (
     <Section
       id="about"
-      eyebrow="01 · Introduction"
-      title="About Me"
-      subtitle="A backend-leaning engineer who likes turning tangled business rules into systems that are readable, testable, and hard to break."
+      label="About"
+      title="I turn tangled business rules into systems that are readable, testable, and hard to break."
+      subtitle="Most of my work lives where the domain is messiest — commissions, eligibility, payouts — and where being quietly wrong is expensive."
     >
       <motion.div
         {...scrollReveal}
@@ -87,29 +81,6 @@ export default function About() {
             <StatCard key={stat.label} stat={stat} />
           ))}
         </motion.div>
-
-        {/* ---- SUPPORTING TILES (each spans 2 of 6 → a row of three) ---- */}
-        {supporting.map((item, i) => {
-          const Icon = INTRO_ICONS[i + 1] ?? FiLayers;
-          return (
-            <motion.article
-              key={item.heading}
-              variants={popIn}
-              whileHover={{ y: -4 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-              className="card-glass group p-6 transition-shadow hover:shadow-card-hover lg:col-span-2"
-            >
-              {/* Icon chip — tinted square, scales gently on card hover. */}
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent transition-transform group-hover:scale-110 dark:bg-accent-light/10 dark:text-accent-light">
-                <Icon size={20} />
-              </div>
-              <h3 className="font-heading text-base font-semibold">{item.heading}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                {item.body}
-              </p>
-            </motion.article>
-          );
-        })}
       </motion.div>
     </Section>
   );

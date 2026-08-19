@@ -66,10 +66,7 @@ export default function Navbar() {
           onClick={(e) => handleNavClick(e, 'home')}
           className="font-heading text-lg font-bold tracking-tight"
         >
-          {/* Monospace angle-brackets give it a subtle "developer" feel. */}
-          <span className="font-mono text-accent dark:text-accent-light">&lt;</span>
           Meethu
-          <span className="font-mono text-accent dark:text-accent-light">/&gt;</span>
         </a>
 
         {/* ---- Desktop links (hidden on mobile) ---- */}

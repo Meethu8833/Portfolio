@@ -30,9 +30,7 @@ export default function LoadingScreen() {
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className="font-heading text-3xl font-bold tracking-tight"
         >
-          <span className="font-mono text-accent dark:text-accent-light">&lt;</span>
           Meethu
-          <span className="font-mono text-accent dark:text-accent-light">/&gt;</span>
         </motion.div>
 
         {/* Loading bar: a track with a gradient fill sweeping 0→100%. */}

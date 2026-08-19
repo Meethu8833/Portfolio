@@ -1,76 +1,42 @@
 import { motion } from 'framer-motion';
-import { FiCalendar, FiMapPin, FiAward } from 'react-icons/fi';
-import { PiGraduationCapFill } from 'react-icons/pi';
 import { education } from '../../data/education';
 import { fadeUp, scrollReveal, staggerContainer } from '../../lib/motion';
 import Section from '../ui/Section';
 
+/**
+ * Education — a compact list rather than a feature card.
+ *
+ * Deliberately understated: degree and institution on one line, period aligned
+ * right. The academic background is context, not a headline, so it stays quiet
+ * next to Experience and Projects.
+ */
 export default function Education() {
   return (
-    <Section
-      id="education"
-      eyebrow="04 · Education"
-      title="Education"
-      subtitle="The academic grounding behind the engineering work."
-    >
-      {/* Constrained width keeps the card centered and elegant rather than
-          stretching edge-to-edge on wide screens. */}
+    <Section id="education" label="Education">
       <motion.div
         {...scrollReveal}
         variants={staggerContainer}
-        className="mx-auto max-w-3xl"
+        className="mx-auto max-w-3xl divide-y divide-slate-200 dark:divide-ink-700"
       >
         {education.map((edu) => (
           <motion.div
             key={edu.degree + edu.institution}
-            variants={fadeUp}   // fade-up entrance when scrolled into view
-            className="card-frame shadow-card transition-shadow hover:shadow-card-hover"
+            variants={fadeUp}
+            className="flex flex-col gap-1 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
           >
-            {/* Inner glass card. Flex row: icon on the left, details on the
-                right — stacks to a column on very small screens. */}
-            <div className="flex flex-col gap-6 rounded-2xl bg-white/80 p-7 backdrop-blur-xl sm:flex-row sm:items-start sm:p-8 dark:bg-ink-800/80">
-              {/* ---- Graduation icon ----
-                  Sits in a gradient disc so it reads as a focal point. It gently
-                  bobs up and down forever to add life without distraction. */}
-              <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-accent-gradient text-white shadow-glow"
-              >
-                <PiGraduationCapFill size={30} />
-              </motion.div>
-
-              {/* ---- Details ---- */}
-              <div className="flex-1">
-                {/* Degree + field as the headline. */}
-                <h3 className="font-heading text-xl font-bold sm:text-2xl">
-                  {edu.degree}
-                  <span className="text-gradient mt-0.5 block">{edu.field}</span>
-                </h3>
-
-                {/* Meta row: institution + period, each with an icon. Wraps on
-                    narrow screens so nothing overflows. */}
-                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-slate-500 dark:text-slate-400">
-                  <span className="flex items-center gap-1.5">
-                    <FiMapPin size={14} /> {edu.institution}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <FiCalendar size={14} /> {edu.period}
-                  </span>
-                </div>
-
-                {/* Short description of the academic foundation. */}
-                <p className="mt-4 border-t border-slate-200 pt-4 text-sm leading-relaxed text-slate-600 dark:border-ink-700 dark:text-slate-300">
-                  {edu.description}
-                </p>
-
-                {/* Degree chip — a compact restatement for scanners. */}
-                <span className="chip mt-4 inline-flex items-center gap-1.5">
-                  <FiAward size={12} />
-                  {edu.degree}
-                </span>
-              </div>
+            <div className="min-w-0">
+              <h3 className="font-display text-base font-semibold">
+                {edu.degree} — {edu.field}
+              </h3>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                {edu.institution}
+              </p>
             </div>
+
+            {/* Period — right-aligned on sm+ so multiple entries form a column. */}
+            <span className="shrink-0 font-mono text-[11px] tracking-wide text-slate-400 dark:text-slate-500">
+              {edu.period}
+            </span>
           </motion.div>
         ))}
       </motion.div>

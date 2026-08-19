@@ -4,7 +4,7 @@ import TimelineItem from '../ui/TimelineItem';
 
 export default function Experience() {
   return (
-    <Section id="experience" eyebrow="03 · Career" title="Work Experience">
+    <Section id="experience" label="Experience">
       {/* The timeline is just the list of items stacked vertically. Each item
           draws its own connector line; we pass `isLast` so the final one omits
           the trailing line. Constrained width keeps line-length readable. */}

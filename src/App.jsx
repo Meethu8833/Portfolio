@@ -5,7 +5,6 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Hero from './components/sections/Hero';
 import LoadingScreen from './components/ui/LoadingScreen';
-import ScrollProgress from './components/ui/ScrollProgress';
 import MouseGlow from './components/ui/MouseGlow';
 import FloatingBlobs from './components/ui/FloatingBlobs';
 import AnimatedSection from './components/ui/AnimatedSection';
@@ -28,7 +27,7 @@ const Contact = lazy(() => import('./components/sections/Contact'));
  *
  * Layering (bottom → top):
  *   FloatingBlobs (-z-10)  →  MouseGlow (z-0)  →  content  →  Navbar (z-50)
- *   →  ScrollProgress (z-60)  →  LoadingScreen (z-100, first ~1.2s only).
+ *   →  LoadingScreen (z-100, first ~1.2s only).
  */
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -55,9 +54,6 @@ export default function App() {
       {/* Global ambient layers (fixed, behind content). */}
       <FloatingBlobs />
       <MouseGlow />
-
-      {/* Top scroll-fill bar. */}
-      <ScrollProgress />
 
       <Navbar />
 

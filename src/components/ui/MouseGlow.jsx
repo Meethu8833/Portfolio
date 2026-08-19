@@ -48,8 +48,8 @@ export default function MouseGlow() {
       style={{ x, y }}
       aria-hidden="true"
       className="pointer-events-none fixed left-0 top-0 z-0 h-[500px] w-[500px] rounded-full
-                 bg-[radial-gradient(circle,rgba(13,148,136,0.16),transparent_65%)] blur-[80px]
-                 dark:bg-[radial-gradient(circle,rgba(45,212,191,0.20),transparent_65%)]"
+                 bg-[radial-gradient(circle,rgba(199,154,92,0.16),transparent_65%)] blur-[80px]
+                 dark:bg-[radial-gradient(circle,rgba(217,178,124,0.20),transparent_65%)]"
     />
   );
 }

@@ -41,7 +41,7 @@ export default function Footer() {
         className="h-0.5 w-full"
         style={{
           backgroundImage:
-            'linear-gradient(90deg, transparent, #0d9488, #06b6d4, transparent)',
+            'linear-gradient(90deg, transparent, #C79A5C, #B07E4A, transparent)',
           backgroundSize: '200% 100%',
         }}
         animate={{ backgroundPosition: ['0% 0%', '200% 0%'] }}
@@ -60,9 +60,7 @@ export default function Footer() {
               onClick={scrollToTop}
               className="font-heading text-xl font-bold tracking-tight"
             >
-              <span className="font-mono text-accent dark:text-accent-light">&lt;</span>
               Meethu
-              <span className="font-mono text-accent dark:text-accent-light">/&gt;</span>
             </button>
 
             {/* Short introduction. */}

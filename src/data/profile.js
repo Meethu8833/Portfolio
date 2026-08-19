@@ -21,6 +21,10 @@ export const profile = {
     'Software engineer building backend and full-stack applications with Python, FastAPI, and Django. Experienced in designing REST APIs, data models, and authentication, and in shipping scalable, well-tested web applications.',
 
   location: 'Kozhikode, Kerala',
+
+  // IANA zone for the live clock in the hero (see hooks/useLocalTime.js).
+  // Kept next to `location` so the two can never drift apart.
+  timeZone: 'Asia/Kolkata',
   email: 'meethuprasanthkk@gmail.com',
   phone: '+91 90371 68833',
 
@@ -30,7 +34,7 @@ export const profile = {
   // External profiles from your resume header.
   socials: {
     github: 'https://github.com/Meethu8833',
-    linkedin: 'https://linkedin.com/in/meethu-prasanth51b9142bb',
+    linkedin: 'https://www.linkedin.com/in/meethu-prasanth-51b9142bb',
     email: 'mailto:meethuprasanthkk@gmail.com',
   },
 };

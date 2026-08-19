@@ -11,6 +11,9 @@
 @import '@fontsource/space-grotesk/700.css';
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/fraunces/400.css';
+@import '@fontsource/fraunces/500.css';
+@import '@fontsource/fraunces/600.css';
 
 /* Tailwind layers — base resets, component classes, utilities. */
 @tailwind base;
@@ -22,28 +25,28 @@
    these variables cover the spots (selection, focus, textures, scrollbar)
    where raw CSS is cleaner than utility classes.
 
-   Palette: teal → cyan accent over a deep-navy ("ink") ground.
+   Palette: muted bronze accent over a near-black ("ink") ground.
 --------------------------------------------------------------------------- */
 :root {
   --bg: #f6f9fb;          /* cool off-white */
   --surface: #ffffff;
-  --text: #0b1220;        /* ink-900 */
+  --text: #0A0B0F;        /* ink-900 */
   --text-muted: #4a5b70;
   --border: #dbe6ec;
-  --accent: #0d9488;      /* teal-600 — AA contrast on white */
-  --accent-2: #06b6d4;    /* cyan-500 */
-  --glow: rgba(13, 148, 136, 0.16);
+  --accent: #C79A5C;      /* bronze */
+  --accent-2: #B07E4A;    /* bronze, darker */
+  --glow: rgba(199, 154, 92, 0.16);
 }
 
 .dark {
-  --bg: #0b1220;          /* ink-900 */
-  --surface: #111c2e;     /* ink-800 */
+  --bg: #0A0B0F;          /* ink-900 */
+  --surface: #14161C;     /* ink-800 */
   --text: #e8f0f5;
   --text-muted: #92a5ba;
-  --border: #1a2942;      /* ink-700 */
-  --accent: #2dd4bf;      /* teal-400 — brighter so it lifts off the navy */
-  --accent-2: #22d3ee;    /* cyan-400 */
-  --glow: rgba(45, 212, 191, 0.18);
+  --border: #24272F;      /* ink-700 */
+  --accent: #D9B27C;      /* bronze, lifted off the black */
+  --accent-2: #C79A5C;    /* bronze */
+  --glow: rgba(217, 178, 124, 0.18);
 }
 
 @layer base {
@@ -105,7 +108,7 @@
   }
 
   /* Skip-to-content link: off-screen until it receives keyboard focus. */
-  /* Uses accent-deep (teal-700+) rather than the lighter accent so white text
+  /* Uses accent-deep (amber-700+) rather than the lighter accent so white text
      on it clears WCAG AA (4.5:1) for normal-size text. */
   .skip-link {
     @apply absolute left-4 top-[-100px] z-[200] rounded-lg bg-[#115e59] px-4 py-2 text-sm font-medium text-white transition-all;
@@ -130,14 +133,14 @@
   /* Gradient-hairline wrapper: a 1px accent frame via the p-px trick. Put a
      `.card-glass` (or any rounded child) inside it. */
   .card-frame {
-    @apply rounded-2xl bg-gradient-to-br from-accent/40 via-slate-200/50 to-accent-cyan/40 p-px;
-    @apply dark:from-accent-light/35 dark:via-ink-700 dark:to-accent-cyan/35;
+    @apply rounded-2xl bg-gradient-to-br from-accent/40 via-slate-200/50 to-accent-warm/40 p-px;
+    @apply dark:from-accent-light/35 dark:via-ink-700 dark:to-accent-warm/35;
   }
 
   /* Accent text — gradient fill for numbers and display words. */
   .text-gradient {
-    @apply bg-gradient-to-br from-accent to-accent-cyan bg-clip-text text-transparent;
-    @apply dark:from-accent-light dark:to-accent-cyan;
+    @apply bg-gradient-to-br from-accent to-accent-warm bg-clip-text text-transparent;
+    @apply dark:from-accent-light dark:to-accent-warm;
   }
 
   /* Primary pill button. */
@@ -185,17 +188,6 @@
   /* Fine film grain — breaks up the large flat gradients so they don't band. */
   .bg-noise {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
-  }
-
-  /* Edge-fade for horizontally scrolling strips (the skills marquee). */
-  .mask-fade-x {
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-  }
-
-  /* Pause any CSS animation on hover — used by the marquee. */
-  .pause-on-hover:hover * {
-    animation-play-state: paused;
   }
 }
 

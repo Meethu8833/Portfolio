@@ -1,8 +1,18 @@
 import { motion } from 'framer-motion';
-import { FiGithub, FiLinkedin, FiMail, FiDownload, FiArrowDown, FiMapPin } from 'react-icons/fi';
+import {
+  FiGithub,
+  FiLinkedin,
+  FiMail,
+  FiDownload,
+  FiEye,
+  FiArrowDown,
+  FiMapPin,
+  FiTerminal,
+} from 'react-icons/fi';
 import { profile } from '../../data/profile';
 import { aboutStats } from '../../data/about';
 import { useTypingEffect } from '../../hooks/useTypingEffect';
+import { useLocalTime } from '../../hooks/useLocalTime';
 import { fadeUp, staggerContainer } from '../../lib/motion';
 
 // Map the socials in profile.js to icons + accessible labels, so the JSX below
@@ -17,16 +27,13 @@ const SOCIAL_ICONS = [
 // same source of truth rather than duplicating the numbers here.
 const HERO_STATS = aboutStats.filter((s) => typeof s.value === 'number');
 
-// Initials for the portrait medallion, derived from the name in profile.js.
-const INITIALS = profile.name
-  .split(' ')
-  .slice(0, 2)
-  .map((w) => w[0])
-  .join('');
-
 export default function Hero() {
   // The rotating job titles for the typewriter line.
   const typedRole = useTypingEffect(profile.roles);
+
+  // My local time, ticking. Pairs with the location line below the summary so
+  // the profile reads as a person in a place, not just a résumé.
+  const { time, zone } = useLocalTime(profile.timeZone);
 
   return (
     <section
@@ -54,12 +61,13 @@ export default function Hero() {
             Open to opportunities
           </motion.div>
 
-          {/* Greeting eyebrow */}
+          {/* Greeting — written the way I'd actually introduce myself, so the
+              page opens in a human voice before the big display name lands. */}
           <motion.p
             variants={fadeUp}
-            className="mb-3 font-mono text-sm text-accent-deep dark:text-accent-light"
+            className="mb-4 max-w-lg text-[15px] leading-relaxed text-slate-600 dark:text-slate-400"
           >
-            Hi, my name is
+            Hey there — I&rsquo;m 
           </motion.p>
 
           {/* Name — the big display headline. Solid ink with a gradient last
@@ -95,12 +103,23 @@ export default function Hero() {
             {profile.summary}
           </motion.p>
 
-          {/* Location line — small, muted, grounds the profile geographically. */}
+          {/* Location + live local time. The clock re-renders once a minute, so
+              a visitor can see whether I'm likely awake before they write. */}
           <motion.p
             variants={fadeUp}
-            className="mt-4 flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-500"
+            className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-slate-500 lg:justify-start dark:text-slate-500"
           >
-            <FiMapPin size={14} /> {profile.location}
+            <span className="flex items-center gap-1.5">
+              <FiMapPin size={14} /> {profile.location}
+            </span>
+            <span aria-hidden="true" className="text-slate-300 dark:text-ink-600">
+              &bull;
+            </span>
+            {/* <time> carries no machine-readable datetime because this is a
+                recurring wall-clock reading, not a specific instant. */}
+            <span className="font-mono text-[13px] tabular-nums">
+              {time} {zone}
+            </span>
           </motion.p>
 
           {/* ---- Call-to-action buttons ---- */}
@@ -108,10 +127,22 @@ export default function Hero() {
             variants={fadeUp}
             className="mt-8 flex flex-col items-center gap-3 sm:flex-row"
           >
-            {/* Resume download. `download` prompts a save; the file lives in /public. */}
-            <a href={profile.resumeUrl} download className="btn-primary group">
+            {/* Read the resume in the browser's built-in PDF viewer. No
+                `download` attribute, so the file renders instead of saving. */}
+            <a
+              href={profile.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary group"
+            >
+              <FiEye className="transition-transform group-hover:scale-110" />
+              View Resume
+            </a>
+
+            {/* Same file, but `download` prompts a save for anyone who wants a copy. */}
+            <a href={profile.resumeUrl} download className="btn-ghost group">
               <FiDownload className="transition-transform group-hover:translate-y-0.5" />
-              Download Resume
+              Download
             </a>
 
             {/* View Projects — smooth-scrolls to the #projects section. */}
@@ -149,47 +180,25 @@ export default function Hero() {
           className="flex flex-col items-center gap-8 lg:col-span-5"
         >
           {/* ---- Portrait medallion ----
-              A conic-gradient ring rotates slowly behind a glass disc holding
-              the initials. Pure CSS rotation on a single element — cheap. */}
+              A static gradient glow sits behind a glass disc holding a terminal
+              glyph. No motion — the disc is decorative, not attention-seeking. */}
           <motion.div variants={fadeUp} className="relative">
-            {/* Rotating conic ring. `blur` softens it into a glow. */}
+            {/* Soft gradient glow around the disc. */}
             <div
               aria-hidden="true"
-              className="absolute -inset-4 animate-spin-slow rounded-full opacity-70 blur-xl
-                         bg-[conic-gradient(from_0deg,#0d9488,#06b6d4,#2dd4bf,#0d9488)]"
+              className="absolute -inset-4 rounded-full opacity-60 blur-xl
+                         bg-[conic-gradient(from_0deg,#C79A5C,#B07E4A,#D9B27C,#C79A5C)]"
             />
             {/* Crisp gradient hairline directly around the disc. */}
-            <div className="relative rounded-full bg-gradient-to-br from-accent via-accent-cyan to-accent-light p-[2px]">
+            <div className="relative rounded-full bg-gradient-to-br from-accent via-accent-warm to-accent-light p-[2px]">
               <div className="flex h-52 w-52 items-center justify-center rounded-full bg-white/80 backdrop-blur-xl dark:bg-ink-800/90 sm:h-64 sm:w-64">
-                <span className="text-gradient font-heading text-6xl font-bold sm:text-7xl">
-                  {INITIALS}
-                </span>
+                <FiTerminal
+                  aria-hidden="true"
+                  className="h-20 w-20 text-accent dark:text-accent-light sm:h-24 sm:w-24"
+                  strokeWidth={1.5}
+                />
               </div>
             </div>
-
-            {/* Floating tech badges pinned around the medallion. Each bobs on a
-                slightly different cycle so the cluster feels alive. */}
-            {[
-              { label: 'Python', className: 'left-0 top-4 sm:-left-6 sm:top-6', delay: 0 },
-              { label: 'FastAPI', className: 'right-0 top-1/3 sm:-right-8', delay: 0.6 },
-              { label: 'Django', className: 'left-0 bottom-10 sm:-left-10', delay: 1.2 },
-              { label: 'React', className: 'right-0 bottom-4 sm:-right-4', delay: 1.8 },
-            ].map((badge) => (
-              <motion.span
-                key={badge.label}
-                aria-hidden="true"
-                animate={{ y: [0, -8, 0] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  delay: badge.delay,
-                }}
-                className={`absolute ${badge.className} rounded-full border border-slate-200 bg-white/90 px-3 py-1 font-mono text-xs font-medium text-slate-700 shadow-card backdrop-blur dark:border-ink-700 dark:bg-ink-800/90 dark:text-slate-300`}
-              >
-                {badge.label}
-              </motion.span>
-            ))}
           </motion.div>
 
           {/* ---- Stat strip ----

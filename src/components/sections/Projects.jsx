@@ -5,36 +5,28 @@ import Section from '../ui/Section';
 import ProjectCard from '../ui/ProjectCard';
 
 export default function Projects() {
-  // The flagship project gets a wide, two-column showcase card at the top; the
-  // rest fall into a normal grid beneath it. Falling back to the first entry
-  // keeps the layout sane if nobody has set `featured` in projects.js.
-  const featuredIndex = Math.max(projects.findIndex((p) => p.featured), 0);
-  const showcase = projects[featuredIndex];
-  const rest = projects.filter((_, i) => i !== featuredIndex);
+  // Every project renders in the same wide, two-column layout — media beside
+  // the copy — so the section reads as one consistent stack rather than a
+  // flagship card followed by narrower ones.
+  // The "coming soon" placeholder is skipped — each card now carries its own
+  // live / in-progress status, so a whole card of filler adds nothing.
+  const real = projects.filter((p) => !p.comingSoon);
 
   return (
     <Section
       id="projects"
-      eyebrow="05 · Portfolio"
-      title="Featured Projects"
-      subtitle="Selected work — from an academic capstone to the production commission engine I build on today."
+      label="Selected Work"
+      title="Things I have built and still maintain."
+      subtitle="From a RAG app you can try right now to the production commission engine I work on today."
     >
       <motion.div
         {...scrollReveal}
         variants={staggerContainer}
         className="space-y-6"
       >
-        {/* ---- Showcase card (full width, media beside the copy on lg) ---- */}
-        {showcase && <ProjectCard project={showcase} showcase />}
-
-        {/* ---- Remaining projects: 1 col on mobile, 2 from md up ---- */}
-        {rest.length > 0 && (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {rest.map((project) => (
-              <ProjectCard key={project.title} project={project} />
-            ))}
-          </div>
-        )}
+        {real.map((project) => (
+          <ProjectCard key={project.title} project={project} showcase />
+        ))}
       </motion.div>
     </Section>
   );
