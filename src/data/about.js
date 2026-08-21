@@ -10,7 +10,7 @@ export const aboutIntro = [
   {
     heading: 'Professional profile',
     // Resume summary, verbatim.
-    body: "I'm a software engineer building backend and full-stack applications with Python, FastAPI, and Django. I focus on designing REST APIs, data models, and authentication, and on shipping scalable, well-tested web applications.",
+    body: "I'm a software engineer with hands-on experience building backend and full-stack web applications using Python, FastAPI, and Django. I focus on designing REST APIs, relational data models, authentication systems, and asynchronous processing pipelines — with a track record of optimizing database performance and delivering scalable, well-tested applications in production.",
   },
   {
     heading: 'What I enjoy building',
@@ -38,13 +38,13 @@ export const aboutIntro = [
  * How each value is derived from the resume:
  *  - Experience: Softroniics (Jun 2024) + IOSS (Feb 2025–present) ≈ 2 years.
  *  - Technologies: count of distinct tools in the resume skills section (~15).
- *  - Projects: the two showcase projects agreed in the plan.
+ *  - Projects: the showcase projects listed in data/projects.js.
  *  - Position: current role/company from the resume.
  */
 export const aboutStats = [
   { label: 'Years of Experience', value: 2, suffix: '+', icon: 'clock' },
   { label: 'Technologies', value: 15, suffix: '+', icon: 'stack' },
-  { label: 'Projects', value: 2, suffix: '', icon: 'folder' },
+  { label: 'Projects', value: 3, suffix: '', icon: 'folder' },
   {
     label: 'Current Position',
     display: 'SWE', // shown instead of a counted number

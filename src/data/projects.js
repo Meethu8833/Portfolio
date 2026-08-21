@@ -40,6 +40,18 @@ export const projects = [
     comingSoon: false,
   },
   {
+    title: 'Alora Events',
+    description:
+      'A full-stack event and hall booking platform built with Python and Django, featuring role-based dashboards, automated double-booking conflict validation, and OTP-based password recovery. Includes full CRUD management with server-side form validation and pagination.',
+    tech: ['Python', 'Django', 'MySQL', 'Bootstrap'],
+    image: null,
+    label: 'Alora Events',   // no screenshot on hand → name the canvas
+    github: null,            // fill in the real URLs to activate the buttons
+    demo: null,
+    featured: false,
+    comingSoon: false,
+  },
+  {
     title: 'More projects coming soon',
     description:
       'New work is in progress. Check back soon, or reach out to hear about what I’m currently building.',

@@ -23,7 +23,7 @@ const CONTACT_INFO = [
   {
     icon: FiLinkedin,
     label: 'LinkedIn',
-    value: 'linkedin.com/in/meethu-prasanth-51b9142bb',
+    value: 'linkedin.com/in/meethu-prasanth',
     href: profile.socials.linkedin,
   },
   {

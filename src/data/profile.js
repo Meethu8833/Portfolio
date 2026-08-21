@@ -18,7 +18,7 @@ export const profile = {
 
   // Resume summary, verbatim.
   summary:
-    'Software engineer building backend and full-stack applications with Python, FastAPI, and Django. Experienced in designing REST APIs, data models, and authentication, and in shipping scalable, well-tested web applications.',
+    'Software Engineer with hands-on experience building backend and full-stack web applications using Python, FastAPI, and Django. Skilled in designing REST APIs, relational data models, authentication systems, and asynchronous processing pipelines. Proven track record of optimizing database performance, improving execution speed, and delivering scalable, well-tested applications in production environments.',
 
   location: 'Kozhikode, Kerala',
 
@@ -34,7 +34,7 @@ export const profile = {
   // External profiles from your resume header.
   socials: {
     github: 'https://github.com/Meethu8833',
-    linkedin: 'https://www.linkedin.com/in/meethu-prasanth-51b9142bb',
+    linkedin: 'https://www.linkedin.com/in/meethu-prasanth',
     email: 'mailto:meethuprasanthkk@gmail.com',
   },
 };
